@@ -1,38 +1,24 @@
 ﻿@model DataModel.PublisherModel
-
 @{
     ViewData["Title"] = "Details";
 }
 
-<h1>@Model.Name Details</h1>
+<h1>Details</h1>
 
-<table class="table">
-    <tbody>
-    @if (Model.BoardGames.Count() > 0)
+<h1>@Model.Name</h1>
+<br />
+@if (Model.BoardGames.Count() > 0)
+{
+    @foreach (var item in Model.BoardGames)
     {
-        @foreach (var item in Model.BoardGames)
-        {
-            <tr>
-                <td>
-                   @item.Name
-                </td>
-                <td class="align-middle">
-                    <img class="rounded-circle" src="@item.ImageURL" alt="@item.Name"
-                    style ="max-width: 150px">
-                    
-                </td>
-            </tr>
-        }
-    }
-    else
-    {
-        <h4>No BoardGames for this publisher</h4>
-    }
-    </tbody>
 
-</table>
-
+        <li>BoardGame: @item.Name</li>
+    }
+}
+else
+{
+    <h4>No Boardgames for this publisher</h4>
+}
 <div>
-    
     <a asp-action="Index">Back to List</a>
 </div>
