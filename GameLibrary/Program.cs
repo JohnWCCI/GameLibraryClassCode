@@ -1,7 +1,12 @@
 using GameLibrary.Data;
+using ServiceBroker;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<GameContext>();
+builder.Services.AddHttpClient<IPublisherService, PublisherService>( c =>
+    {
+     c.BaseAddress = new Uri("https://localhost:7177/api/PublisherApi/");
+    });
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

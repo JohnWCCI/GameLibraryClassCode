@@ -3,22 +3,24 @@ using GameLibrary.Data;
 using GameLibrary.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using ServiceBroker;
 
 namespace GameLibrary.Controllers
 {
     public class PublisherController : Controller
     {
         private readonly GameContext _context;
-        public PublisherController(GameContext context)
+        private readonly IPublisherService service;
+
+        public PublisherController(GameContext context, IPublisherService service)
         {
             _context = context;
+            this.service = service;
         }
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            var list = View(_context.Publishers
-                                .Include(b => b.BoardGames)
-                                .ToList());
-            return View();
+            var list = await service.GetAsync();
+            return View(list);
         }
         public ActionResult Create()
         {
